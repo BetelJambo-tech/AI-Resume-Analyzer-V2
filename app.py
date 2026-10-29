@@ -335,6 +335,30 @@ else:
     else:
         st.write("Your resume matches the job description very well.")
 
+
+    st.markdown("### 📥 Download Your Analysis Report")
+
+
+
+    
+    pdf_report = generate_pdf_report(
+        match_score,
+        resume_skills,
+        missing_skills
+    )
+
+
+
+    
+    st.download_button(
+        label="📄 Download PDF Report",
+        data=pdf_report,
+        file_name="AI_Resume_Analysis_Report.pdf",
+        mime="application/pdf",
+        use_container_width=True
+    )
+
+
 st.markdown("---")
 st.caption("Built with Python, Streamlit, spaCy, and PyPDF2")
 st.caption("AI Resume Analyzer Project by Betel")
