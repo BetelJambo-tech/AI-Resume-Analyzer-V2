@@ -168,6 +168,65 @@ def calculate_match(resume_skills, job_skills):
     return round(score, 2)
 
 
+def generate_pdf_report(match_score, resume_skills, missing_skills):
+    buffer = BytesIO()
+
+    doc = SimpleDocTemplate(buffer)
+    styles = getSampleStyleSheet()
+    story = []
+
+    story.append(Paragraph("AI Resume Analyzer V2", styles["Title"]))
+    story.append(Spacer(1, 20))
+
+    story.append(Paragraph("Resume Analysis Report", styles["Heading1"]))
+    story.append(Spacer(1, 15))
+
+    story.append(Paragraph(
+        f"Job Match Score: {match_score:.2f}%",
+        styles["Heading2"]
+    ))
+
+    story.append(Spacer(1, 15))
+
+    story.append(Paragraph("Skills Detected", styles["Heading2"]))
+
+    for skill in resume_skills:
+        story.append(Paragraph(f"- {skill.title()}", styles["Normal"]))
+
+    story.append(Spacer(1, 15))
+
+    story.append(Paragraph("Missing Job Skills", styles["Heading2"]))
+
+    if missing_skills:
+        for skill in missing_skills:
+            story.append(Paragraph(f"- {skill.upper()}", styles["Normal"]))
+    else:
+        story.append(Paragraph(
+            "No missing skills detected.",
+            styles["Normal"]
+        ))
+
+    story.append(Spacer(1, 20))
+
+    story.append(Paragraph("Recommendations", styles["Heading2"]))
+
+    if missing_skills:
+        story.append(Paragraph(
+            "Consider learning or improving the missing skills. "
+            "Only add skills to your resume if you have experience with them.",
+            styles["Normal"]
+        ))
+    else:
+        story.append(Paragraph(
+            "Your resume contains all detected job skills.",
+            styles["Normal"]
+        ))
+
+    doc.build(story)
+    buffer.seek(0)
+
+    return buffer.getvalue()
+
 col1, col2 = st.columns(2, gap="large")
 
 with col1:
