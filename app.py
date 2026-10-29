@@ -84,14 +84,38 @@ textarea {
 """, unsafe_allow_html=True)
 st.title("📄 AI Resume Analyzer + Job Matcher")
 st.caption("Upload a resume and compare it with a job description.")
-st.info("Upload a PDF resume and paste a job description to see your match score, missing skills, and suggestions.")
 
-st.info("""
-🔍 How it works:
-- Upload your resume (PDF)
-- Paste a job description
-- Get match score, missing skills, and suggestions
-""")
+st.markdown("### How It Works")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="result-box" style="text-align:center;">
+        <h2>📤</h2>
+        <h3>01. Upload</h3>
+        <p>Upload your resume in PDF format.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="result-box" style="text-align:center;">
+        <h2>💼</h2>
+        <h3>02. Compare</h3>
+        <p>Paste the job description you want to match.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="result-box" style="text-align:center;">
+        <h2>📊</h2>
+        <h3>03. Improve</h3>
+        <p>Get your match score and skill suggestions.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 SKILL_KEYWORDS = [
     "python", "java", "javascript", "html", "css", "sql", "react", "node.js",
