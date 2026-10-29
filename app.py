@@ -4,57 +4,81 @@ import pandas as pd
 import re
 
 st.set_page_config(page_title="AI Resume Analyzer", page_icon="📄", layout="wide")
+
 st.markdown("""
 <style>
-.main {
-    background-color: #0e1117;
+/* Main background */
+.stApp {
+    background: linear-gradient(135deg, #0B1020, #141B34);
+    color: #F8FAFC;
 }
 
+/* Main content */
 .block-container {
     padding-top: 2rem;
     padding-bottom: 2rem;
+    max-width: 1200px;
 }
 
+/* Headings */
 h1, h2, h3 {
-    color: #f8fafc;
+    color: #F8FAFC !important;
+    font-weight: 700;
 }
 
-.stMetric {
-    background-color: #1e293b;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-}
-
+/* Upload area */
 [data-testid="stFileUploader"] {
-    background-color: #111827;
-    padding: 10px;
-    border-radius: 12px;
+    background-color: #1E293B;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #334155;
 }
 
+/* Text area */
 textarea {
     border-radius: 12px !important;
+    background-color: #1E293B !important;
+    color: white !important;
 }
 
+/* Buttons */
+.stButton > button {
+    background: linear-gradient(90deg, #7C3AED, #2563EB);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-weight: 600;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(90deg, #6D28D9, #1D4ED8);
+    color: white;
+}
+
+/* Result cards */
 .result-box {
-    background-color: #111827;
-    padding: 18px;
-    border-radius: 14px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    background-color: #1E293B;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #334155;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
+/* Section titles */
 .section-title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    color: #f8fafc;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #C4B5FD;
 }
 
+/* Small text */
 .small-note {
-    color: #cbd5e1;
-    font-size: 15px;
+    color: #94A3B8;
+    font-size: 14px;
 }
 </style>
 """, unsafe_allow_html=True)
