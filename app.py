@@ -3,6 +3,9 @@ import PyPDF2
 import pandas as pd
 import re
 from html import escape
+from io import BytesIO
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
 
 st.set_page_config(page_title="AI Resume Analyzer", page_icon="📄", layout="wide")
 
