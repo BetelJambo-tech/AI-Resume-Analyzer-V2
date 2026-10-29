@@ -2,6 +2,7 @@ import streamlit as st
 import PyPDF2
 import pandas as pd
 import re
+from html import escape
 
 st.set_page_config(page_title="AI Resume Analyzer", page_icon="📄", layout="wide")
 
@@ -232,17 +233,37 @@ else:
     st.error("Low keyword match. Review the missing skills below.")
 
 
-    st.markdown("### ❌ Missing Skills")
-    if missing_skills:
-        st.error(", ".join(missing_skills))
-    else:
-        st.success("No missing skills. Great match!")
+    
+from html import escape
 
-    st.markdown("### 📌 Resume Skills")
-    if resume_skills:
-        st.write(", ".join(resume_skills))
-    else:
-        st.write("No known skills detected.")
+st.markdown("### ✅ Skills Detected")
+
+if resume_skills:
+    badges = "".join(
+        f'<span style="display:inline-block; background:#153D35; '
+        f'color:#6EE7B7; padding:9px 15px; margin:5px; '
+        f'border-radius:20px; font-size:14px;">'
+        f'✓ {escape(skill.title())}</span>'
+        for skill in resume_skills
+    )
+    st.markdown(badges, unsafe_allow_html=True)
+else:
+    st.info("No known skills detected.")
+
+st.markdown("### ⚠️ Missing Job Skills")
+
+if missing_skills:
+    badges = "".join(
+        f'<span style="display:inline-block; background:#4C2535; '
+        f'color:#FDA4AF; padding:9px 15px; margin:5px; '
+        f'border-radius:20px; font-size:14px;">'
+        f'✕ {escape(skill.upper() if skill.lower() == "aws" else skill.title())}</span>'
+        for skill in missing_skills
+    )
+    st.markdown(badges, unsafe_allow_html=True)
+else:
+    st.success("No missing skills detected. Great match!")
+
 
     st.markdown("### 💡 Suggestions")
     if missing_skills:
