@@ -163,17 +163,32 @@ def calculate_match(resume_skills, job_skills):
     score = (len(matched) / len(job_skills)) * 100
     return round(score, 2)
 
-col1, col2 = st.columns(2)
 
-st.markdown('<div class="section-title">Upload and Compare</div>', unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
+col1, col2 = st.columns(2, gap="large")
 
 with col1:
-    uploaded_resume = st.file_uploader("Upload Resume (PDF)", type=["pdf"])
+    st.markdown("### 📄 Upload Your Resume")
+    st.caption("Upload your resume in PDF format.")
+
+    uploaded_resume = st.file_uploader(
+        "Choose your resume",
+        type=["pdf"]
+    )
+
+    if uploaded_resume is not None:
+        st.success(f"✅ {uploaded_resume.name} uploaded successfully!")
 
 with col2:
-    job_description = st.text_area("Paste Job Description", height=250)
+    st.markdown("### 💼 Job Description")
+    st.caption("Paste the job description you want to compare.")
+
+    job_description = st.text_area(
+        "Job Description",
+        height=220,
+        placeholder="Paste the job requirements here...",
+        label_visibility="collapsed"
+    )
+  
 
 if uploaded_resume and job_description:
     resume_text = extract_text_from_pdf(uploaded_resume)
