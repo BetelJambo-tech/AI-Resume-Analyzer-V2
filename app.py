@@ -204,10 +204,33 @@ if uploaded_resume and job_description:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    metric1, metric2, metric3 = st.columns(3)
-    metric1.metric("Match Score", f"{match_score}%")
-    metric2.metric("Resume Skills Found", len(resume_skills))
-    metric3.metric("Missing Skills", len(missing_skills))
+    
+st.markdown("### 📈 Your Job Match Overview")
+
+metric1, metric2, metric3 = st.columns(3)
+
+with metric1:
+    st.metric("🎯 Job Match", f"{match_score}%")
+
+with metric2:
+    st.metric("✅ Skills Detected", len(resume_skills))
+
+with metric3:
+    st.metric("⚠️ Missing Skills", len(missing_skills))
+
+st.markdown("#### Resume-to-Job Match")
+
+st.progress(
+    min(max(float(match_score) / 100, 0.0), 1.0)
+)
+
+if match_score >= 80:
+    st.success("Strong keyword match! Your resume includes most of the detected job skills.")
+elif match_score >= 50:
+    st.warning("Moderate keyword match. Some job skills may be missing.")
+else:
+    st.error("Low keyword match. Review the missing skills below.")
+
 
     st.markdown("### ❌ Missing Skills")
     if missing_skills:
