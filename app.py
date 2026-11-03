@@ -282,6 +282,9 @@ if uploaded_resume and job_description:
 
 st.markdown("#### Resume-to-Job Match")
 
+
+
+
 st.progress(
     min(max(float(match_score) / 100, 0.0), 1.0)
 )
