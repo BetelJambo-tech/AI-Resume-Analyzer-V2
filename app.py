@@ -263,23 +263,22 @@ if uploaded_resume and job_description:
     match_score = calculate_match(resume_skills, job_skills)
 
     st.markdown("---")
-    st.markdown('<div class="section-title">📊 Analysis Results</div>', unsafe_allow_html=True)
+    st.markdown("### 📊 Analysis Results")
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("### 📈 Your Job Match Overview")
 
-    
-st.markdown("### 📈 Your Job Match Overview")
+    metric1, metric2, metric3 = st.columns(3)
 
-metric1, metric2, metric3 = st.columns(3)
+    with metric1:
+        st.metric("🎯 Job Match", f"{match_score}%")
 
-with metric1:
-    st.metric("🎯 Job Match", f"{match_score}%")
+    with metric2:
+        st.metric("✅ Skills Detected", len(resume_skills))
 
-with metric2:
-    st.metric("✅ Skills Detected", len(resume_skills))
+    with metric3:
+        st.metric("⚠️ Missing Skills", len(missing_skills))
 
-with metric3:
-    st.metric("⚠️ Missing Skills", len(missing_skills))
+
 
 st.markdown("#### Resume-to-Job Match")
 
