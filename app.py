@@ -282,19 +282,16 @@ if uploaded_resume and job_description:
 
     st.markdown("#### Resume-to-Job Match")
 
+    st.progress(
+        min(max(float(match_score) / 100, 0.0), 1.0)
+    )
 
-
-
-st.progress(
-    min(max(float(match_score) / 100, 0.0), 1.0)
-)
-
-if match_score >= 80:
-    st.success("Strong keyword match! Your resume includes most of the detected job skills.")
-elif match_score >= 50:
-    st.warning("Moderate keyword match. Some job skills may be missing.")
-else:
-    st.error("Low keyword match. Review the missing skills below.")
+    if match_score >= 80:
+        st.success("Strong keyword match! Your resume includes most of the detected job skills.")
+    elif match_score >= 50:
+        st.warning("Moderate keyword match. Some job skills may be missing.")
+    else:
+        st.error("Low keyword match. Review the missing skills below.")
 
 
     
