@@ -295,56 +295,56 @@ if uploaded_resume and job_description:
 
 
     
-from html import escape
-
-st.markdown("### ✅ Skills Detected")
-
-if resume_skills:
-    badges = "".join(
-        f'<span style="display:inline-block; background:#153D35; '
-        f'color:#6EE7B7; padding:9px 15px; margin:5px; '
-        f'border-radius:20px; font-size:14px;">'
-        f'✓ {escape(skill.title())}</span>'
-        for skill in resume_skills
-    )
-    st.markdown(badges, unsafe_allow_html=True)
-else:
-    st.info("No known skills detected.")
-
-st.markdown("### ⚠️ Missing Job Skills")
-
-if missing_skills:
-    badges = "".join(
-        f'<span style="display:inline-block; background:#4C2535; '
-        f'color:#FDA4AF; padding:9px 15px; margin:5px; '
-        f'border-radius:20px; font-size:14px;">'
-        f'✕ {escape(skill.upper() if skill.lower() == "aws" else skill.title())}</span>'
-        for skill in missing_skills
-    )
-    st.markdown(badges, unsafe_allow_html=True)
-else:
-    st.success("No missing skills detected. Great match!")
-
-
-    st.markdown("### 💡 Suggestions")
-    if missing_skills:
-        st.write("Consider adding or improving these skills in your resume if you have experience with them:")
-        for skill in missing_skills:
-            st.write(f"- {skill}")
-    else:
-        st.write("Your resume matches the job description very well.")
-
-
-    st.markdown("### 📥 Download Your Analysis Report")
-
-
-
+    from html import escape
     
-    pdf_report = generate_pdf_report(
-        match_score,
-        resume_skills,
-        missing_skills
-    )
+    st.markdown("### ✅ Skills Detected")
+    
+    if resume_skills:
+        badges = "".join(
+            f'<span style="display:inline-block; background:#153D35; '
+            f'color:#6EE7B7; padding:9px 15px; margin:5px; '
+            f'border-radius:20px; font-size:14px;">'
+            f'✓ {escape(skill.title())}</span>'
+            for skill in resume_skills
+        )
+        st.markdown(badges, unsafe_allow_html=True)
+    else:
+        st.info("No known skills detected.")
+    
+    st.markdown("### ⚠️ Missing Job Skills")
+    
+    if missing_skills:
+        badges = "".join(
+            f'<span style="display:inline-block; background:#4C2535; '
+            f'color:#FDA4AF; padding:9px 15px; margin:5px; '
+            f'border-radius:20px; font-size:14px;">'
+            f'✕ {escape(skill.upper() if skill.lower() == "aws" else skill.title())}</span>'
+            for skill in missing_skills
+        )
+        st.markdown(badges, unsafe_allow_html=True)
+    else:
+        st.success("No missing skills detected. Great match!")
+    
+    
+        st.markdown("### 💡 Suggestions")
+        if missing_skills:
+            st.write("Consider adding or improving these skills in your resume if you have experience with them:")
+            for skill in missing_skills:
+                st.write(f"- {skill}")
+        else:
+            st.write("Your resume matches the job description very well.")
+    
+    
+        st.markdown("### 📥 Download Your Analysis Report")
+    
+    
+    
+        
+        pdf_report = generate_pdf_report(
+            match_score,
+            resume_skills,
+            missing_skills
+        )
 
 
 
