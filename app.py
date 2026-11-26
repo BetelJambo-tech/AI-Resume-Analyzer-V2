@@ -326,29 +326,24 @@ if uploaded_resume and job_description:
         st.success("No missing skills detected. Great match!")
     
     
-        st.markdown("### 💡 Suggestions")
-        if missing_skills:
-            st.write("Consider adding or improving these skills in your resume if you have experience with them:")
-            for skill in missing_skills:
-                st.write(f"- {skill}")
-        else:
-            st.write("Your resume matches the job description very well.")
-    
-    
-        st.markdown("### 📥 Download Your Analysis Report")
-    
-    
-    
         
-        pdf_report = generate_pdf_report(
-            match_score,
-            resume_skills,
-            missing_skills
-        )
+    st.markdown("### 💡 Suggestions")
 
+    if missing_skills:
+        st.write("Consider adding or improving these skills in your resume if you have experience with them:")
+        for skill in missing_skills:
+            st.write(f"- {skill}")
+    else:
+        st.write("Your resume matches the job description very well.")
 
+    st.markdown("### 📥 Download Your Analysis Report")
 
-    
+    pdf_report = generate_pdf_report(
+        match_score,
+        resume_skills,
+        missing_skills
+    )
+
     st.download_button(
         label="📄 Download PDF Report",
         data=pdf_report,
