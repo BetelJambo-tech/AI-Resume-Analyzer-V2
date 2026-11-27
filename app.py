@@ -487,7 +487,7 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
 col1, col2 = st.columns(2, gap="large")
 
 with col1:
-    st.markdown("### 📄 Upload Your Resume")
+    st.markdown("### Upload Your Resume")
     st.caption("Upload your resume in PDF format.")
 
     uploaded_resume = st.file_uploader(
@@ -499,7 +499,7 @@ with col1:
         st.success(f"✅ {uploaded_resume.name} uploaded successfully!")
 
 with col2:
-    st.markdown("### 💼 Job Description")
+    st.markdown("### Job Description")
     st.caption("Paste the job description you want to compare.")
 
     job_description = st.text_area(
@@ -556,24 +556,24 @@ else:
     match_score = calculate_match(resume_skills, job_skills)
 
     st.markdown("---")
-    st.markdown("### 📊 Analysis Results")
+    st.markdown("### Analysis Results")
 
-    st.markdown("### 📈 Your Job Match Overview")
+    st.markdown("### Your Job Match Overview")
 
     
     metric1, metric2, metric3, metric4 = st.columns(4)
 
     with metric1:
-        st.metric("🎯 Job Match", f"{match_score}%")
+        st.metric("Job Match", f"{match_score}%")
 
     with metric2:
-        st.metric("✅ Skills Detected", len(resume_skills))
+        st.metric("Skills Detected", len(resume_skills))
 
     with metric3:
-        st.metric("🎯 Matched Skills", len(matched_skills))
+        st.metric("Matched Skills", len(matched_skills))
 
     with metric4:
-        st.metric("⚠️ Missing Skills", len(missing_skills))
+        st.metric("Missing Skills", len(missing_skills))
 
 
 
@@ -666,7 +666,7 @@ else:
         st.write(f"• {recommendation}")
 
 
-    st.markdown("### 📥 Download Your Analysis Report")
+    st.markdown("### Download Your Analysis Report")
 
     pdf_report = generate_pdf_report(
         match_score,
@@ -676,7 +676,7 @@ else:
     )
 
     st.download_button(
-        label="📄 Download PDF Report",
+        label="Download PDF Report",
         data=pdf_report,
         file_name="AI_Resume_Analysis_Report.pdf",
         mime="application/pdf",
