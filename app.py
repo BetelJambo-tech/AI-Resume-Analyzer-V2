@@ -260,7 +260,7 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
 
     story.append(Spacer(1, 15))
     
-        story.append(Paragraph("Matched Job Skills", styles["Heading2"]))
+    story.append(Paragraph("Matched Job Skills", styles["Heading2"]))
 
     if matched_skills:
         for skill in matched_skills:
