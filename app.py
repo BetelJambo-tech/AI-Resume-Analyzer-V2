@@ -594,7 +594,7 @@ else:
     
     from html import escape
     
-    st.markdown("### ✅ Skills Detected")
+    st.markdown("### Skills Detected")
     
     if resume_skills:
         badges = "".join(
@@ -609,7 +609,7 @@ else:
         st.info("No known skills detected.")
         
     
-    st.markdown("### 🎯 Matched Job Skills")
+    st.markdown("### Matched Job Skills")
     st.caption("Skills found in both your resume and the job description.")
 
     if matched_skills:
@@ -625,7 +625,7 @@ else:
         st.info("No matching job skills detected.")
 
 
-    st.markdown("### ⚠️ Missing Job Skills")
+    st.markdown("### Missing Job Skills")
     
     if missing_skills:
         badges = "".join(
