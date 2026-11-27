@@ -233,7 +233,7 @@ def calculate_match(resume_skills, job_skills):
     return round(score, 2)
 
 
-def generate_pdf_report(match_score, resume_skills, missing_skills):
+def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skills):
     buffer = BytesIO()
 
     doc = SimpleDocTemplate(buffer)
@@ -259,7 +259,16 @@ def generate_pdf_report(match_score, resume_skills, missing_skills):
         story.append(Paragraph(f"- {skill.title()}", styles["Normal"]))
 
     story.append(Spacer(1, 15))
+    
+        story.append(Paragraph("Matched Job Skills", styles["Heading2"]))
 
+    if matched_skills:
+        for skill in matched_skills:
+            story.append(Paragraph(f"- {skill.title()}", styles["Normal"]))
+    else:
+        story.append(Paragraph("No matching skills detected.", styles["Normal"]))
+
+    story.append(Spacer(1, 15))
     story.append(Paragraph("Missing Job Skills", styles["Heading2"]))
 
     if missing_skills:
@@ -428,6 +437,7 @@ if uploaded_resume and job_description:
     pdf_report = generate_pdf_report(
         match_score,
         resume_skills,
+        matched_skills,
         missing_skills
     )
 
