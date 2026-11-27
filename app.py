@@ -265,6 +265,61 @@ def format_skill(skill):
 
 
 
+def generate_recommendations(match_score, matched_skills, missing_skills):
+    recommendations = []
+
+    if match_score >= 80:
+        assessment = "Excellent Match"
+        recommendations.append(
+            "Your resume aligns strongly with the detected job requirements."
+        )
+
+    elif match_score >= 60:
+        assessment = "Good Match"
+        recommendations.append(
+            "Your resume matches many of the detected job requirements."
+        )
+
+    elif match_score >= 40:
+        assessment = "Moderate Match"
+        recommendations.append(
+            "Your resume has relevant skills, but there is room for improvement."
+        )
+
+    else:
+        assessment = "Needs Improvement"
+        recommendations.append(
+            "Consider developing more skills relevant to this position."
+        )
+
+    if matched_skills:
+        strengths = ", ".join(
+            format_skill(skill) for skill in sorted(matched_skills)[:5]
+        )
+        recommendations.append(
+            f"Highlight your experience with {strengths}."
+        )
+
+    if missing_skills:
+        gaps = ", ".join(
+            format_skill(skill) for skill in sorted(missing_skills)[:5]
+        )
+        recommendations.append(
+            f"Consider developing or demonstrating these skills: {gaps}."
+        )
+
+    recommendations.append(
+        "Use measurable achievements and relevant projects to strengthen your resume."
+    )
+
+    recommendations.append(
+        "Only include skills that you genuinely possess."
+    )
+
+    return assessment, recommendations
+
+
+
 def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skills):
     buffer = BytesIO()
 
@@ -390,19 +445,31 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
     story.append(Spacer(1, 20))
 
 
-    story.append(Paragraph("Recommendations", styles["Heading2"]))
+    
+    story.append(Paragraph(
+        "Personalized Recommendations",
+        styles["Heading2"]
+    ))
 
-    if missing_skills:
+    assessment, recommendations = generate_recommendations(
+        match_score,
+        matched_skills,
+        missing_skills
+    )
+
+    story.append(Paragraph(
+        f"<b>Assessment: {escape(assessment)}</b>",
+        matched_style if match_score >= 60 else detected_style
+    ))
+
+    story.append(Spacer(1, 8))
+
+    for recommendation in recommendations:
         story.append(Paragraph(
-            "Consider learning or improving the missing skills. "
-            "Only add skills to your resume if you have experience with them.",
-            styles["Normal"]
+            f"- {escape(recommendation)}",
+            detected_style
         ))
-    else:
-        story.append(Paragraph(
-            "Your resume contains all detected job skills.",
-            styles["Normal"]
-        ))
+
 
     doc.build(story)
     buffer.seek(0)
@@ -531,14 +598,30 @@ if uploaded_resume and job_description:
     
     
         
-    st.markdown("### 💡 Suggestions")
+    
+    st.subheader("Personalized Recommendations")
 
-    if missing_skills:
-        st.write("Consider adding or improving these skills in your resume if you have experience with them:")
-        for skill in missing_skills:
-            st.write(f"- {skill}")
+    assessment, recommendations = generate_recommendations(
+        match_score,
+        matched_skills,
+        missing_skills
+    )
+
+    if match_score >= 80:
+        st.success(f"Excellent Match — {match_score:.2f}%")
+
+    elif match_score >= 60:
+        st.success(f"Good Match — {match_score:.2f}%")
+
+    elif match_score >= 40:
+        st.warning(f"Moderate Match — {match_score:.2f}%")
+
     else:
-        st.write("Your resume matches the job description very well.")
+        st.warning(f"Needs Improvement — {match_score:.2f}%")
+
+    for recommendation in recommendations:
+        st.write(f"• {recommendation}")
+
 
     st.markdown("### 📥 Download Your Analysis Report")
 
