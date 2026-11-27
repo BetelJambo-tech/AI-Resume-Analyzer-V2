@@ -593,7 +593,7 @@ else:
             f'<span style="display:inline-block; background:#153D35; '
             f'color:#6EE7B7; padding:9px 15px; margin:5px; '
             f'border-radius:20px; font-size:14px;">'
-            f'✓ {escape(skill.title())}</span>'
+            f'✓ {escape(format_skill(skill))}</span>'
             for skill in resume_skills
         )
         st.markdown(badges, unsafe_allow_html=True)
@@ -609,7 +609,7 @@ else:
             f'<span style="display:inline-block; background:#153D35; '
             f'color:#6EE7B7; padding:9px 15px; margin:5px; '
             f'border-radius:20px; font-size:14px;">'
-            f'✓ {escape(skill.title())}</span>'
+            f'✓ {escape(format_skill(skill))}</span>'
             for skill in matched_skills
         )
         st.markdown(badges, unsafe_allow_html=True)
@@ -624,7 +624,7 @@ else:
             f'<span style="display:inline-block; background:#4C2535; '
             f'color:#FDA4AF; padding:9px 15px; margin:5px; '
             f'border-radius:20px; font-size:14px;">'
-            f'✕ {escape(skill.upper() if skill.lower() == "aws" else skill.title())}</span>'
+            f'✕ {escape(format_skill(skill))}</span>'
             for skill in missing_skills
         )
         st.markdown(badges, unsafe_allow_html=True)
