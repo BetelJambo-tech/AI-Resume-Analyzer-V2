@@ -114,32 +114,34 @@ st.markdown("### How It Works")
 
 col1, col2, col3 = st.columns(3)
 
-with col1:
-    st.markdown("""
-    <div class="result-box" style="text-align:center;">
-        <h2>📤</h2>
-        <h3>01. Upload</h3>
-        <p>Upload your resume in PDF format.</p>
-    </div>
-    """, unsafe_allow_html=True)
+steps = [
+    ("01", "Upload", "Upload your resume as a PDF."),
+    ("02", "Compare", "Enter the target job description."),
+    ("03", "Review", "Explore your match score and skill gaps.")
+]
 
-with col2:
-    st.markdown("""
-    <div class="result-box" style="text-align:center;">
-        <h2>💼</h2>
-        <h3>02. Compare</h3>
-        <p>Paste the job description you want to match.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-    <div class="result-box" style="text-align:center;">
-        <h2>📊</h2>
-        <h3>03. Improve</h3>
-        <p>Get your match score and skill suggestions.</p>
-    </div>
-    """, unsafe_allow_html=True)
+for col, (number, title, description) in zip(
+    [col1, col2, col3], steps
+):
+    with col:
+        st.markdown(f"""
+        <div style="
+            background:#1E293B;
+            border:1px solid #334155;
+            border-radius:12px;
+            padding:20px;
+            min-height:160px;
+            text-align:left;
+            box-sizing:border-box;
+        ">
+            <p style="color:#94A3B8; font-size:14px;
+                margin-bottom:10px;">{number}</p>
+            <h3 style="font-size:22px;
+                margin-bottom:8px;">{title}</h3>
+            <p style="color:#CBD5E1; font-size:15px;
+                margin:0;">{description}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 
