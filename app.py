@@ -134,12 +134,73 @@ with col3:
     """, unsafe_allow_html=True)
 
 
+
 SKILL_KEYWORDS = [
-    "python", "java", "javascript", "html", "css", "sql", "react", "node.js",
-    "flask", "streamlit", "machine learning", "deep learning", "data analysis",
-    "pandas", "numpy", "opencv", "scikit-learn", "git", "github", "aws",
-    "docker", "mongodb", "firebase", "rest api", "linux"
+    # Programming Languages
+    "python", "java", "javascript", "typescript",
+    "c++", "c#", "php", "ruby", "matlab", "swift",
+    "kotlin",
+
+    # Web Development
+    "html", "css", "react", "angular", "vue.js",
+    "node.js", "flask", "django", "fastapi",
+    "bootstrap", "streamlit", "rest api",
+
+    # Data Science and Analytics
+    "data analysis", "data visualization",
+    "data science", "pandas", "numpy", "excel",
+    "tableau", "power bi", "statistics",
+    "data mining", "matplotlib", "sas", "spss",
+
+    # Artificial Intelligence
+    "artificial intelligence", "machine learning",
+    "deep learning", "natural language processing",
+    "nlp", "tensorflow", "pytorch", "scikit-learn",
+    "opencv", "computer vision", "generative ai",
+
+    # Databases
+    "sql", "mysql", "postgresql", "mongodb",
+    "sqlite", "oracle", "firebase", "nosql",
+
+    # Cloud Computing and DevOps
+    "aws", "azure", "google cloud", "docker",
+    "kubernetes", "jenkins", "git", "github",
+    "gitlab", "ci/cd", "terraform", "linux",
+
+    # Cybersecurity
+    "cybersecurity", "network security",
+    "information security", "wireshark",
+    "penetration testing", "risk management",
+    "incident response", "encryption",
+
+    # Healthcare and Health Informatics
+    "health informatics", "biomedical informatics",
+    "clinical informatics", "ehr", "emr", "epic",
+    "cerner", "hl7", "fhir", "hipaa",
+    "clinical data", "medical terminology",
+    "healthcare analytics", "public health",
+    "clinical research", "patient care",
+    "bioinformatics", "medical imaging",
+
+    # Business and Management
+    "project management", "business analysis",
+    "agile", "scrum", "jira", "strategic planning",
+    "customer service", "budgeting",
+    "microsoft office", "powerpoint",
+
+    # Research
+    "research", "literature review",
+    "systematic review", "academic writing",
+    "data collection", "statistical analysis",
+
+    # Soft Skills
+    "communication", "leadership", "teamwork",
+    "problem solving", "critical thinking",
+    "time management", "adaptability",
+    "collaboration", "organization",
+    "attention to detail", "decision making"
 ]
+
 
 def extract_text_from_pdf(uploaded_file):
     pdf_reader = PyPDF2.PdfReader(uploaded_file)
