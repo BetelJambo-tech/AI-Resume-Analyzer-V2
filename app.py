@@ -483,6 +483,8 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
     buffer.seek(0)
 
     return buffer.getvalue()
+    
+st.markdown('<div style="height: 40px;"></div>', unsafe_allow_html=True)
 
 col1, col2 = st.columns(2, gap="large")
 
