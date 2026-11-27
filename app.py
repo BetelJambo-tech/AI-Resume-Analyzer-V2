@@ -348,13 +348,6 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
         leading=17
     )
 
-
-    story.append(Paragraph("Skills Detected", styles["Heading2"]))
-
-    for skill in resume_skills:
-        story.append(Paragraph(f"- {skill.title()}", styles["Normal"]))
-
-    story.append(Spacer(1, 15))
     
     
     story.append(Paragraph("Skills Detected", styles["Heading2"]))
