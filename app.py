@@ -89,19 +89,25 @@ textarea {
 </style>
 """, unsafe_allow_html=True)
 
+
 st.markdown("""
-<div style="text-align:center; padding:35px 0 25px 0;">
-    <div style="font-size:45px; margin-bottom:12px;">✨</div>
-    <h1 style="font-size:46px; margin-bottom:12px;">
-        AI Resume Analyzer
-        <span style="color:#A78BFA;">V2</span>
+<div style="padding: 20px 0 28px 0; text-align: left;">
+    <p style="font-size: 12px; font-weight: 600; letter-spacing: 2px; color: #94A3B8; margin-bottom: 8px;">
+        RESUME ANALYSIS TOOL
+    </p>
+    <h1 style="font-size: 40px; font-weight: 700; margin: 0 0 12px 0;">
+        Resume Analyzer
     </h1>
-    <p style="font-size:18px; color:#CBD5E1;">
-        Analyze your resume. Discover missing skills.
-        Improve your chances of matching your dream job.
+    <p style="font-size: 17px; color: #CBD5E1; max-width: 750px; line-height: 1.6;">
+        Compare your resume with a job description, identify skill gaps,
+        and receive personalized recommendations.
+    </p>
+    <p style="font-size: 14px; color: #94A3B8; margin-top: 18px;">
+        Skill Matching &nbsp; · &nbsp; Gap Analysis &nbsp; · &nbsp; PDF Reports
     </p>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 st.markdown("### How It Works")
