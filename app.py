@@ -323,6 +323,7 @@ if uploaded_resume and job_description:
 
     resume_skills = extract_skills(resume_text)
     job_skills = extract_skills(job_description)
+    matched_skills = sorted(set(resume_skills) & set(job_skills))
 
     missing_skills = sorted(set(job_skills) - set(resume_skills))
     match_score = calculate_match(resume_skills, job_skills)
