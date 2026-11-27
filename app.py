@@ -211,15 +211,19 @@ def extract_text_from_pdf(uploaded_file):
             text += extracted + " "
     return text
 
+
 def extract_skills(text):
     text_lower = text.lower()
     found_skills = []
 
     for skill in SKILL_KEYWORDS:
-        if skill in text_lower:
+        pattern = r"(?<!\w)" + re.escape(skill.lower()) + r"(?!\w)"
+
+        if re.search(pattern, text_lower):
             found_skills.append(skill)
 
     return sorted(set(found_skills))
+
 
 def calculate_match(resume_skills, job_skills):
     if not job_skills:
