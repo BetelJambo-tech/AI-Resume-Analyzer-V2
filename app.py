@@ -333,7 +333,8 @@ if uploaded_resume and job_description:
 
     st.markdown("### 📈 Your Job Match Overview")
 
-    metric1, metric2, metric3 = st.columns(3)
+    
+    metric1, metric2, metric3, metric4 = st.columns(4)
 
     with metric1:
         st.metric("🎯 Job Match", f"{match_score}%")
@@ -342,6 +343,9 @@ if uploaded_resume and job_description:
         st.metric("✅ Skills Detected", len(resume_skills))
 
     with metric3:
+        st.metric("🎯 Matched Skills", len(matched_skills))
+
+    with metric4:
         st.metric("⚠️ Missing Skills", len(missing_skills))
 
 
@@ -376,7 +380,24 @@ if uploaded_resume and job_description:
         st.markdown(badges, unsafe_allow_html=True)
     else:
         st.info("No known skills detected.")
+        
     
+    st.markdown("### 🎯 Matched Job Skills")
+    st.caption("Skills found in both your resume and the job description.")
+
+    if matched_skills:
+        badges = "".join(
+            f'<span style="display:inline-block; background:#153D35; '
+            f'color:#6EE7B7; padding:9px 15px; margin:5px; '
+            f'border-radius:20px; font-size:14px;">'
+            f'✓ {escape(skill.title())}</span>'
+            for skill in matched_skills
+        )
+        st.markdown(badges, unsafe_allow_html=True)
+    else:
+        st.info("No matching job skills detected.")
+
+
     st.markdown("### ⚠️ Missing Job Skills")
     
     if missing_skills:
