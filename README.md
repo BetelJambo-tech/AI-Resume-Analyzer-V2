@@ -30,6 +30,26 @@ The application helps job seekers compare their resumes with job descriptions, i
 4. Review the match score, matched skills, and missing skills.
 5. Review recommendations and download the analysis report.
 
+
+## Application Screenshots
+
+### Homepage
+
+![Homepage](screenshots/homepage.png)
+
+### Resume Upload and Job Description
+
+![Resume Upload](screenshots/resume-upload.png)
+
+### Analysis Results
+
+![Analysis Results](screenshots/analysis-results.png)
+
+### Skill Analysis and Recommendations
+
+![Recommendations](screenshots/recommendations.png)
+
+
 ## Technologies Used
 
 - Python
