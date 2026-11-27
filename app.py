@@ -4,8 +4,10 @@ import pandas as pd
 import re
 from html import escape
 from io import BytesIO
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER
 
 st.set_page_config(page_title="AI Resume Analyzer", page_icon="📄", layout="wide")
 
@@ -233,6 +235,36 @@ def calculate_match(resume_skills, job_skills):
     return round(score, 2)
 
 
+def format_skill(skill):
+    special_names = {
+        "sql": "SQL",
+        "numpy": "NumPy",
+        "javascript": "JavaScript",
+        "github": "GitHub",
+        "html": "HTML",
+        "css": "CSS",
+        "power bi": "Power BI",
+        "node.js": "Node.js",
+        "mongodb": "MongoDB",
+        "typescript": "TypeScript",
+        "postgresql": "PostgreSQL",
+        "nlp": "NLP",
+        "api": "API",
+        "aws": "AWS",
+        "ai": "AI",
+        "ui/ux": "UI/UX",
+        "c++": "C++",
+        "c#": "C#",
+        "pytorch": "PyTorch",
+        "tensorflow": "TensorFlow",
+        "scikit-learn": "scikit-learn",
+        "excel": "Excel"
+    }
+
+    return special_names.get(skill.lower(), skill.title())
+
+
+
 def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skills):
     buffer = BytesIO()
 
@@ -240,18 +272,82 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
     styles = getSampleStyleSheet()
     story = []
 
-    story.append(Paragraph("AI Resume Analyzer V2", styles["Title"]))
-    story.append(Spacer(1, 20))
+    title_style = ParagraphStyle(
+        "CustomTitle",
+        fontSize=26,
+        leading=32,
+        textColor=colors.HexColor("#7C3AED"),
+        alignment=TA_CENTER,
+        spaceAfter=12
+    )
 
-    story.append(Paragraph("Resume Analysis Report", styles["Heading1"]))
-    story.append(Spacer(1, 15))
+    subtitle_style = ParagraphStyle(
+        "CustomSubtitle",
+        fontSize=14,
+        leading=18,
+        textColor=colors.HexColor("#64748B"),
+        alignment=TA_CENTER
+    )
 
-    story.append(Paragraph(
-        f"Job Match Score: {match_score:.2f}%",
-        styles["Heading2"]
-    ))
+    story.append(Paragraph("AI Resume Analyzer V2", title_style))
+    story.append(Paragraph("Resume Analysis Report", subtitle_style))
+    story.append(Spacer(1, 25))
 
-    story.append(Spacer(1, 15))
+    summary_data = [
+        ["Job Match", "Detected", "Matched", "Missing"],
+        [
+            f"{match_score:.2f}%",
+            str(len(resume_skills)),
+            str(len(matched_skills)),
+            str(len(missing_skills))
+        ]
+    ]
+
+    summary_table = Table(
+        summary_data,
+        colWidths=[110, 110, 110, 110]
+    )
+
+    summary_table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1E293B")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#F1F5F9")),
+        ("TEXTCOLOR", (0, 1), (-1, 1), colors.HexColor("#7C3AED")),
+        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+        ("FONTNAME", (0, 0), (-1, -1), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, 0), 11),
+        ("FONTSIZE", (0, 1), (-1, 1), 18),
+        ("TOPPADDING", (0, 0), (-1, -1), 14),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 14),
+    ]))
+
+    story.append(summary_table)
+    story.append(Spacer(1, 25))
+    
+    detected_style = ParagraphStyle(
+        "DetectedSkills",
+        parent=styles["Normal"],
+        textColor=colors.HexColor("#334155"),
+        fontSize=11,
+        leading=17
+    )
+
+    matched_style = ParagraphStyle(
+        "MatchedSkills",
+        parent=styles["Normal"],
+        textColor=colors.HexColor("#15803D"),
+        fontSize=11,
+        leading=17
+    )
+
+    missing_style = ParagraphStyle(
+        "MissingSkills",
+        parent=styles["Normal"],
+        textColor=colors.HexColor("#DC2626"),
+        fontSize=11,
+        leading=17
+    )
+
 
     story.append(Paragraph("Skills Detected", styles["Heading2"]))
 
@@ -260,27 +356,46 @@ def generate_pdf_report(match_score, resume_skills, matched_skills, missing_skil
 
     story.append(Spacer(1, 15))
     
-    story.append(Paragraph("Matched Job Skills", styles["Heading2"]))
+    
+    story.append(Paragraph("Skills Detected", styles["Heading2"]))
 
-    if matched_skills:
-        for skill in matched_skills:
-            story.append(Paragraph(f"- {skill.title()}", styles["Normal"]))
-    else:
-        story.append(Paragraph("No matching skills detected.", styles["Normal"]))
+    detected_text = ", ".join(
+        escape(format_skill(skill)) for skill in resume_skills
+    )
+
+    story.append(Paragraph(
+        detected_text or "No skills detected.",
+        detected_style
+    ))
 
     story.append(Spacer(1, 15))
+
+    story.append(Paragraph("Matched Job Skills", styles["Heading2"]))
+
+    matched_text = ", ".join(
+        escape(format_skill(skill)) for skill in matched_skills
+    )
+
+    story.append(Paragraph(
+        matched_text or "No matching skills detected.",
+        matched_style
+    ))
+
+    story.append(Spacer(1, 15))
+
     story.append(Paragraph("Missing Job Skills", styles["Heading2"]))
 
-    if missing_skills:
-        for skill in missing_skills:
-            story.append(Paragraph(f"- {skill.upper()}", styles["Normal"]))
-    else:
-        story.append(Paragraph(
-            "No missing skills detected.",
-            styles["Normal"]
-        ))
+    missing_text = ", ".join(
+        escape(format_skill(skill)) for skill in missing_skills
+    )
+
+    story.append(Paragraph(
+        missing_text or "No missing skills detected.",
+        missing_style if missing_skills else matched_style
+    ))
 
     story.append(Spacer(1, 20))
+
 
     story.append(Paragraph("Recommendations", styles["Heading2"]))
 
