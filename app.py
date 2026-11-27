@@ -502,11 +502,46 @@ with col2:
     )
   
 
-if uploaded_resume and job_description:
-    resume_text = extract_text_from_pdf(uploaded_resume)
+
+if uploaded_resume is None and not job_description.strip():
+    st.info("Please upload your resume and paste a job description to begin.")
+
+elif uploaded_resume is None:
+    st.info("Please upload your resume to begin the analysis.")
+
+elif not job_description.strip():
+    st.info("Please paste a job description to begin your resume analysis.")
+
+else:
+
+    
+    try:
+        resume_text = extract_text_from_pdf(uploaded_resume)
+
+    except Exception:
+        st.error("Unable to read the uploaded PDF. Please upload a valid, unprotected PDF file.")
+        st.stop()
+
+    if not resume_text or not resume_text.strip():
+        st.warning("No readable text was found in your resume.")
+        st.info("Please upload a text-based PDF instead of a scanned image.")
+        st.stop()
+
 
     resume_skills = extract_skills(resume_text)
     job_skills = extract_skills(job_description)
+    
+    if not resume_skills:
+        st.warning("⚠️ No recognizable skills were found in your resume.")
+        st.info("Please check that your resume includes relevant skills, experience, and qualifications.")
+        st.stop()
+
+    
+    if not job_skills:
+        st.warning("⚠️ No recognizable skills were found in the job description.")
+        st.info("Please provide a more detailed job description that includes required skills, qualifications, or technical requirements.")
+        st.stop()
+
     
     matched_skills = sorted(set(resume_skills) & set(job_skills))
     missing_skills = sorted(set(job_skills) - set(resume_skills))
